@@ -21,7 +21,7 @@ def main():
         bc = beeCrowdPage(context)
 
         bc.navigate()
-        #bc.login('kboing11@hotmail.com', '32216538')
+        
         bc.go_to_perfil()
         valid = True
 
