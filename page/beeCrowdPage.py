@@ -35,21 +35,27 @@ class beeCrowdPage:
 
     def get_code(self, table_values):
 
-       
+        self.code_page = self.context.new_page()
+        self.code_page.goto("https://www.beecrowd.com.br/judge/pt/runs/code/"+table_values[3])
 
-        for i in range(0, len(table_values)):
-            self.code_page = self.context.new_page()
-            self.code_page.goto("https://www.beecrowd.com.br/judge/pt/runs/code/"+table_values[i][3])
+        lines = self.code_page.locator("[class = 'ace_line']")
+        
+        code = ""
+        
+        for j in range(0, lines.count()):
+            
+            code = code + lines.nth(j).all_inner_texts()[0].replace("\xa0", " ") + '\n'
+            
+                
+        self.code_page.close()
 
-            lines = self.code_page.locator("[class = 'ace_line']")
-            print(lines.count())
-            with open(table_values[i][1]+".txt", "w") as f:
-                for j in range(0, lines.count()):
-                    f.write(lines.nth(j).all_inner_texts()[0])
-                    f.write("\n")
-                    
+        return code
+    
+    def next_is_visible(self):
 
+        return self.page.locator("[class = 'next']").is_visible()
 
-            self.code_page.close()
+    def next(self):
 
+        self.page.locator("[class = 'next']").click()
 
